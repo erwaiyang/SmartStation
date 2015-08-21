@@ -1,8 +1,5 @@
 <?php
-	if($_GET['test']=="test"){
-		echo "test OK!";
-		exit();
-	}
+	echo "here is the index.php!";
 	if(empty($_POST)){
 		exit();
 	}
