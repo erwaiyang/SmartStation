@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>This is a Simple Test Page</title>
+</head>
+<body>
+	<div>
+		<button id="ot_A" value="A">option A</button>
+		<button id="ot_else" value="else">option else</button>
+	</div>
+	<div id="test">
+		
+	</div>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript">
+	$('button').click( function(){
+		$.post('./index.php', {
+			operation: 'for_test',
+			option: this.value
+		},
+		function(data){
+			$('div#test').html( 'type=' + data.type +'<br /> returning=' + data.returning);
+		},
+		"json");
+
+		console.log(this.value);
+	});
+	</script>
+</body>
+</html>
