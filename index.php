@@ -1,6 +1,10 @@
 <?php
+	if($_GET['test']=="test"){
+		echo "test OK!";
+		exit();
+	}
 	if(empty($_POST)){
-		exit;
+		exit();
 	}
 	switch ($_POST['operation']) {
 		case 'letter_in':
