@@ -5,25 +5,27 @@
 </head>
 <body>
 	<div>
-		<button id="ot_A" value="A">option A</button>
-		<button id="ot_else" value="else">option else</button>
+		<button id="test_btn" value="letter_receiving">Simulating letter_receiving</button>
 	</div>
 	<div id="test">
 		
 	</div>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript">
+	var order = "zip_code,postbox_id,postbox_longitude,postbox_latitude,send_date,send_time,left_box_mail_num,left_box_mail_weight,right_box_mail_num,right_box_mail_weight";
+	var data = "1245,2,12345,67890,20150822,0923,2,20,3,30";
 	$('button').click( function(){
 		$.post('./index.php', {
-			operation: 'for_test',
-			option: this.value
+			operation: "letter_receiving",
+			order: order,
+			data: data
 		},
 		function(data){
-			$('div#test').html( 'type=' + data.type +'<br /> returning=' + data.returning);
-		},
-		"json");
-
-		console.log(this.value);
+			$('div#test').html( data );
+			if(data == 0){
+				console.log('succeed');
+			}
+		});
 	});
 	</script>
 </body>
