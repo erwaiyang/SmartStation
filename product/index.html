@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="StarterApp">
+<head>
+	<!--CDN-->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+
+	<link rel="stylesheet" type="text/css" href="./css.css">
+	<meta name="viewport" content="initial-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Smart Station 智慧驛站 @ NTU Hackathon 2015</title>
+</head>
+<body layout="column" ng-controller="AppCtrl">
+	<div style="position:fixed;bottom:3em;right:3em;z-index:99;background-color:#42bd41;padding:1em;border-radius: 10px;">
+		<a href="#" id="go_to_top">TOP</a>
+	</div>
+	<div layout="row">
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<!-- <md-button class="md-icon-button" aria-label> -->
+					<img src="./small_icon.png" />
+				<!-- </md-button> -->
+				<h2>
+					<span>Smart Station 智慧驛站</span>
+				</h2>
+				<span flex></span>
+				<md-button id="btn_concept">CONCEPT</md-button>
+				<md-button id="btn_demo">DEMO</md-button>
+				<md-button id="btn_team">TEAM</md-button>
+			</div>
+		</md-toolbar>
+	</div>
+
+<!-- <div layout="column">	 -->
+	<div id="intro" layout="row" layout-sm="column" layout-fill layout-align="space-around center">
+		<div flex="40" hide-sm hide-md>
+			<img src="./logo.png" style="max-width: 80%"/>
+		</div>
+		<div flex="60">
+		<div  class="vid_container">
+			<iframe class="video" src="https://www.youtube.com/embed/uSm3uc_5nVc" frameborder="0" allowfullscreen></iframe>
+			</div>
+		</div>
+	</div>
+	
+	<md-divider></md-divider>
+	
+	<div id="title_concept">
+		<h2 class="md-display-3 md-primary">---CONCEPT---</h2>
+	</div>
+
+	<div id="concept" layout="row" layout-fill layout-align="space-around center">
+		<md-content class="md-padding">
+			<md-tabs md-dynamic-height md-border-bottom>
+				<md-tab label="物聯郵筒">
+					<img src="./img/concept/1.jpg" class="concept_img" />
+					<md-content>
+						<h3 class="md-headline">
+							<p>民眾到郵筒交寄信件，可立即知道郵件收攬時間，郵筒資訊即傳送至雲端後台。</p>
+							<p>系統提供郵筒投信量及安全防護監控。</p>
+							<p>信筒（箱）遭竊或損害時可警示通知。</p>
+						</h3>
+					</md-content>
+				</md-tab>
+				<md-tab label="智慧收攬">
+					<img src="./img/concept/2.jpg" class="concept_img" />
+					<md-content>
+						<h3 class="md-headline">
+							<p>後台管理系統可監看全區各郵筒信件投入狀態、信筒郵件量，並可利用Google Map圖形式顯示。</p>
+							<p>系統可依郵筒信件量，規劃建議收攬路線，無郵件郵筒可免前住收件，減少人力提升收件效率。</p>
+						</h3>
+					</md-content>
+				</md-tab>
+				<md-tab label="統計分析">
+					<img src="./img/concept/3.jpg" class="concept_img" />
+					<md-content>
+						<h3 class="md-headline">
+							<p>郵務士成收攬後，可提供標示並傳送至雲端後台。</p>
+							<p>後台管理系統列統計及稽核各郵務士及各郵筒投信、收攬報表。</p>
+							<p>免除人力及時間管「信筒（箱）郵件稽核單」之蓋戳、及後複核手續。</p>
+						</h3>
+					</md-content>
+				</md-tab>
+				<md-tab label="行動管理">
+					<img src="./img/concept/4.jpg" class="concept_img p_img" />
+					<md-content>
+						<h3 class="md-headline">
+							<p>管理者可自用手機APP即時查看郵筒狀態。</p>
+						</h3>
+					</md-content>
+				</md-tab>
+			</md-tabs>
+		</md-content>
+	</div>
+
+	<md-divider></md-divider>
+
+	<div layout="row" id="title_demo">
+		<span flex></span><h2 class="md-display-3">---DEMO---</h2>
+	</div>
+
+	<div id="demo" layout="row" layout-fill layout-align="space-around center">
+		<div flex="33" layout="column"  layout-align="center center">
+			<img src="./img/intel.png" />
+			<h3 class="md-title">
+				<md-button class="md-raised">Device</md-button>
+			</h3>
+		</div>
+		<div flex="33" layout="column"  layout-align="center center">
+			<img src="./img/android.png" class="demo_icon" />
+			<h3 class="md-title">
+				<md-button class="md-raised">Android</md-button>
+			</h3>
+		</div>
+		<div flex="33" layout="column"  layout-align="center center">
+			<img src="./img/apache.png" />
+			<h3 class="md-title">
+				<md-button id="demo_web_manager" class="md-raised">Web Manager</md-button>
+			</h3>
+		</div>
+	</div>
+
+	<md-divider></md-divider>
+
+	<div id="title_team">
+		<h2 class="md-display-3">---TEAM---</h2>
+	</div>
+
+	<div id="team" layout="row" layout-fill layout-align="center center">
+		<div flex layout="column"  layout-align="center center">
+			<h4 class="md-title">吳胤澤</h4>
+			<small class="md-subhead">#845</small>
+		</div>
+		<div flex layout="column"  layout-align="center center">
+			<h4 class="md-title">柯清長</h4>
+			<small class="md-subhead">#692</small>
+		</div>
+		<div flex layout="column"  layout-align="center center">
+			<h4 class="md-title">楊雅晴</h4>
+			<small class="md-subhead">#697</small>
+		</div>
+		<div flex layout="column"  layout-align="center center">
+			<h4 class="md-title">陳仲彥</h4>
+			<small class="md-subhead">#716</small>
+		</div>
+	</div>
+	<div>
+		<img src="./img/team.jpg" style="max-width:100%;" />
+	</div>
+	<!-- </div>	 -->
+
+	<md-grid-tile>
+		<md-grid-tile-footer>
+			<h4>NTU Hackathon 2015. Team SmartStation.</h34>
+		</md-grid-tile-footer>
+	</md-grid-tile>
+
+	<!--Angularjs-->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+	<script type="text/javascript" src="./js.js"></script>
+	<script type="text/javascript">
+	$("body").on('click', '#btn_team', function() {
+	    $('html, body').animate({
+	        scrollTop: $("#title_team").offset().top
+	    }, 1500);
+	})
+	.on('click', '#btn_demo', function() {
+	    $('html, body').animate({
+	        scrollTop: $("#title_demo").offset().top
+	    }, 1500);
+	})
+	.on('click', '#btn_concept', function() {
+	    $('html, body').animate({
+	        scrollTop: $("#title_concept").offset().top
+	    }, 1500);
+	}).on('click', '#go_to_top', function(){
+		window.scrollTo(0, 0);
+	});
+	</script>
+</body>
+</html>
