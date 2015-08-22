@@ -115,6 +115,12 @@
 	}
 
 	function data_here(data){
+			//件數
+			data['left_box_mail_num'] += "件";
+			data['right_box_mail_num'] += "件";
+			//公克
+			data['left_box_mail_weight'] += "公克";
+			data['right_box_mail_weight'] += "公克";
 		$('td.data_here').each(function(e){
 			var name = $(this).attr('id');
 			$(this).html(data[name]);
