@@ -72,8 +72,8 @@
 				<td class="data_here" id="right_box_mail_weight"></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
+				<td>timestamp</td>
+				<td class="data_here" id="timestamp"></td>
 			</tr>
 		</table>
   	</div>
@@ -96,6 +96,7 @@
 			//設定地圖
 			initMap({lat:postboxLat, lng:postboxLng});
 			//填資料
+			data_here(data);
 		},"json");
 
 	});
@@ -113,8 +114,11 @@
 		});
 	}
 
-	function data_here(){
-		
+	function data_here(data){
+		$('td.data_here').each(function(e){
+			var name = $(this).attr('id');
+			$(this).html(data[name]);
+		});
 	}
     </script>
   </body>
