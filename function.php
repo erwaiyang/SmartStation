@@ -29,11 +29,25 @@ class do_mysql{
 		return $data;
 	}
 
-	function insert_data($scope){
-		$insert = "";
-	}
+	function insert_data($order, $data){
+		//$order and $data are all CSV format, the delimiter is comma
+		$insert = "INSERT INTO `" . $this->dbname . "`.`postbox_receving` ("  . $order .  ") VALUES (" . $data . ");";
+		if ($this->db->query($insert)){
+			return 0; //succeed
+		}else{
+			// echo $this->db->error;
+			// echo "<br/>";
+			// echo "query=" . $insert;
+			return 1; //error
+		}
+
+
+	}	
 }
-$a = new do_mysql();
-$return = $a->get_data();
-echo $return;
+//testing
+// $a = new do_mysql();
+// $order = "zip_code,postbox_id,postbox_longitude,postbox_latitude,send_date,send_time,left_box_mail_num,left_box_mail_weight,right_box_mail_num,right_box_mail_weight";
+// $data = "235,1,12345,67890,20150822,0923,2,20,3,30";
+// $a->insert_data($order, $data);
+
 ?>
