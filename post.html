@@ -5,7 +5,21 @@
 </head>
 <body>
 	<div>
-		<button id="test_btn">Simulating</button>
+			$order=<input id="order">
+			$data=<input id="data">
+			<button id="insert_btn" value="letter_receiving">Simulating letter_receiving</button>
+			<br />
+			(This will insert a new row into database)
+			<br />
+			(return 0:ok, 1:error)
+		<hr />
+			Table name:
+			<select id="tbn_select">
+				<option value="postbox_receiving">postbox_receiving</option>
+			</select>
+			<button id="get_data_btn" value="get_data">Simulating get_data</button>
+		<hr/>
+		<!-- <button value="">Simulating</button> -->
 	</div>
 	<div id="test">
 		
@@ -14,12 +28,27 @@
 	<script type="text/javascript">
 	var order = "zip_code,postbox_id,postbox_longitude,postbox_latitude,send_date,send_time,left_box_mail_num,left_box_mail_weight,right_box_mail_num,right_box_mail_weight";
 	var data = "1245,2,12345,67890,20150822,0923,2,20,3,30";
-	$('button').click( function(){
+
+	$('input#order').val(order);
+	$('input#data').val(data);
+
+	$('button#get_data_btn').click( function(){
 		$.post('./index.php', {
 			operation: "get_data",
-			//order: order,
-			//data: data,
-			tablename: "postbox_receiving"
+			tablename: $('#tbn_select').val()
+		},
+		function(data){
+			$('div#test').html( data );
+			if(data == 0){
+				console.log('succeed');
+			}
+		});
+	});	
+	$('button#insert_btn').click( function(){
+		$.post('./index.php', {
+			operation: this.value,
+			order: $('input#order').val(),
+			data: $('input#data').val()
 		},
 		function(data){
 			$('div#test').html( data );
