@@ -17,13 +17,23 @@ class do_mysql{
 		$this->db->close();
 	}
 
-	function get_data($tablename){
-		$query = "SELECT * FROM `"  . $tablename .  "`;";
+	function get_data($tablename, $is_only_one){
+		if($is_only_one){ //true
+			$query = "SELECT * FROM `"  . $tablename .  "` ORDER BY `" . $tablename . "`.`id` DESC LIMIT 0,1;";
+		}else{
+			$query = "SELECT * FROM `"  . $tablename .  "`;";
+		}
+		
 		$result = $this->db->query($query);
+		
 		//return data
-		$data = array();
-		while($row = $result->fetch_assoc()){
-			array_push($data, $row);
+		if($is_only_one){
+			$data = $result->fetch_assoc();
+		}else{
+			$data = array();
+			while($row = $result->fetch_assoc()){
+				array_push($data, $row);
+			}
 		}
 		$result->close();
 		return json_encode($data);
@@ -45,7 +55,7 @@ class do_mysql{
 	}	
 }
 //testing
-$a = new do_mysql();
+//$a = new do_mysql();
 // $order = "zip_code,postbox_id,postbox_longitude,postbox_latitude,send_date,send_time,left_box_mail_num,left_box_mail_weight,right_box_mail_num,right_box_mail_weight";
 // $data = "235,1,12345,67890,20150822,0923,2,20,3,30";
 // $a->insert_data($order, $data);

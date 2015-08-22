@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>This is a Simple Test Page</title>
 </head>
 <body>
@@ -35,7 +36,8 @@
 	$('button#get_data_btn').click( function(){
 		$.post('./index.php', {
 			operation: "get_data",
-			tablename: $('#tbn_select').val()
+			tablename: $('#tbn_select').val(),
+			is_only_one : 0
 		},
 		function(data){
 			$('div#test').html( data );

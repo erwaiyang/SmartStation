@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+	#container{
+		height:100%;
+		width:70%;
+        float: right;
+	}
+    #map {
+        height: 100%;
+        width: 100%;
+    }
+    #panel{
+    	float: left;
+    	height: 100%;
+      	width: 30%;
+      	padding: auto;
+    }
+    </style>
+  </head>
+  <body>
+  	<div id="panel">
+  		<h4>郵筒位置</h4>
+
+  	</div>
+  	<div id="container">
+    <div id="map"></div></div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+        async defer></script>-->
+    <script>
+    $(document).ready(function(){
+		$.post('./index.php', {
+			operation: "get_data",
+			tablename: "postbox_receiving",
+			is_only_one : 1
+		},
+		function(data){
+
+			console.log("lng="+data.postbox_longitude);
+			console.log("lat="+data.postbox_latitude);
+			var postboxLat = parseInt(data.postbox_latitude);
+			var postboxLng = parseInt(data.postbox_longitude);
+
+			//lat緯度 lng經度
+			initMap({lat:postboxLat, lng:postboxLng});
+
+		},"json");
+
+	});
+
+    //var initLocation = {lat: 25.017569, lng: 121.539784};
+	var map;
+	function initMap(LatLng) {
+		map = new google.maps.Map(document.getElementById('map'), {
+			center: LatLng,
+			zoom: 15
+		});
+		console.log("initMap()");
+		var marker = new google.maps.Marker({
+			position: LatLng,
+			map: map,
+			title: '可愛郵筒'
+		});
+		// var infowindow = new google.maps.InfoWindow({
+		// 	content: "<div>郵筒在這裡~</div>"
+		// });
+		// marker.addListener('click', function() {
+		// 	infowindow.open(map, marker);
+		// });
+	}
+    </script>
+  </body>
+</html>
