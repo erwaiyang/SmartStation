@@ -30,15 +30,57 @@
   <body>
   	<div id="panel">
   		<h4>郵筒位置</h4>
-
+		<table>
+			<tr>
+				<td>行政區</td>
+				<td class="data_here" id="zip_code"></td>
+			</tr>
+			<tr>
+				<td>郵筒編號</td>
+				<td class="data_here" id="postbox_id"></td>
+			</tr>
+			<tr>
+				<td>郵筒所在經度</td>
+				<td class="data_here" id="postbox_longitude"></td>
+			</tr>
+			<tr>
+				<td>郵筒所在緯度</td>
+				<td class="data_here" id="postbox_latitude"></td>
+			</tr>
+			<tr>
+				<td>寄件日期</td>
+				<td class="data_here" id="send_date"></td>
+			</tr>
+			<tr>
+				<td>寄件時間</td>
+				<td class="data_here" id="send_time"></td>
+			</tr>
+			<tr>
+				<td>左孔投遞次數</td>
+				<td class="data_here" id="left_box_mail_num"></td>
+			</tr>
+			<tr>
+				<td>左孔估計重量</td>
+				<td class="data_here" id="left_box_mail_weight"></td>
+			</tr>
+			<tr>
+				<td>右孔投遞次數</td>
+				<td class="data_here" id="right_box_mail_num"></td>
+			</tr>
+			<tr>
+				<td>右孔估計重量</td>
+				<td class="data_here" id="right_box_mail_weight"></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
   	</div>
   	<div id="container">
     <div id="map"></div></div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-    <!--<script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
-        async defer></script>-->
     <script>
     $(document).ready(function(){
 		$.post('./index.php', {
@@ -47,38 +89,32 @@
 			is_only_one : 1
 		},
 		function(data){
-
-			console.log("lng="+data.postbox_longitude);
-			console.log("lat="+data.postbox_latitude);
-			var postboxLat = parseInt(data.postbox_latitude);
-			var postboxLng = parseInt(data.postbox_longitude);
+			var postboxLat = parseFloat(data.postbox_latitude);
+			var postboxLng = parseFloat(data.postbox_longitude);
 
 			//lat緯度 lng經度
+			//設定地圖
 			initMap({lat:postboxLat, lng:postboxLng});
-
+			//填資料
 		},"json");
 
 	});
-
-    //var initLocation = {lat: 25.017569, lng: 121.539784};
 	var map;
 	function initMap(LatLng) {
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: LatLng,
-			zoom: 15
+			zoom: 16
 		});
 		console.log("initMap()");
 		var marker = new google.maps.Marker({
 			position: LatLng,
 			map: map,
-			title: '可愛郵筒'
+			title: '郵筒位置'
 		});
-		// var infowindow = new google.maps.InfoWindow({
-		// 	content: "<div>郵筒在這裡~</div>"
-		// });
-		// marker.addListener('click', function() {
-		// 	infowindow.open(map, marker);
-		// });
+	}
+
+	function data_here(){
+		
 	}
     </script>
   </body>

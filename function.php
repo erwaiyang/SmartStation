@@ -45,9 +45,9 @@ class do_mysql{
 		if ($this->db->query($insert)){
 			return 0; //succeed
 		}else{
-			// echo $this->db->error;
-			// echo "<br/>";
-			// echo "query=" . $insert;
+			echo $this->db->error;
+			echo "<br/>";
+			echo "query=" . $insert;
 			return 1; //error
 		}
 
