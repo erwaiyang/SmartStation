@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Map</title>
+    <title>後台系統</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <style>
       html, body {
         height: 100%;
@@ -22,15 +30,15 @@
     #panel{
     	float: left;
     	height: 100%;
-      	width: 30%;
-      	padding: auto;
+      	width: 25%;
+      	padding: 1%;
     }
     </style>
   </head>
   <body>
-  	<div id="panel">
-  		<h4>郵筒位置</h4>
-		<table>
+  	<div id="panel" class="col-lg-2">
+  		<h3>郵筒位置 <button class="btn btn-primary" id="refresh_btn">更新</button></h3>
+		<table class="table table-hover table-bordered">
 			<tr>
 				<td>行政區</td>
 				<td class="data_here" id="zip_code"></td>
@@ -77,12 +85,21 @@
 			</tr>
 		</table>
   	</div>
-  	<div id="container">
-    <div id="map"></div></div>
+  	<div id="container" class="col-lg-10">
+    	<div id="map"></div>
+    </div>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyC-RctKSztG0rLOTUF_tDbbAfaT-geFKrc"></script>
     <script>
     $(document).ready(function(){
+    	getTable();
+    	$('button#refresh_btn').click(function(){
+    		$(this).prop('disabled', 'disabled');
+    		getTable();
+    	});
+	});
+	var map;
+	function getTable(){
 		$.post('./index.php', {
 			operation: "get_data",
 			tablename: "postbox_receiving",
@@ -97,10 +114,12 @@
 			initMap({lat:postboxLat, lng:postboxLng});
 			//填資料
 			data_here(data);
-		},"json");
 
-	});
-	var map;
+			//按鈕恢復正常
+			$('button#refresh_btn').removeProp('disabled');
+		},"json");
+	}
+
 	function initMap(LatLng) {
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: LatLng,
