@@ -1,7 +1,7 @@
 <?php
 class do_mysql{
 	//this line is the config of database
-	private $host = "localhost", $user = "root", $pass = "ntu_dev", $dbname = "post_mgr";
+	private $host = "localhost", $user = "root", $pass = "ntu_dev", $dbname = "new_post_db";
 	//database connection resource
 	private $db;
 	//the constructor
