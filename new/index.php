@@ -15,6 +15,7 @@
 			echo $getting->get_data($_REQUEST['tablename'], $_REQUEST['is_only_one']);
 			break;
 		case 'get_table_rows':
+			$getting = new do_mysql();
 			echo $getting->get_table_rows($_REQUEST['tablename'], $_REQUEST['limit_start'], $_REQUEST['limit_row']);
 			break;
 		default:
