@@ -6,9 +6,9 @@
 		exit();
 	}
 	switch ($_REQUEST['operation']) {
-		case 'letter_receiving':
+		case 'insert_data':
 			$working = new do_mysql();
-			echo $working->insert_data($_REQUEST['order'], $_REQUEST['data']);
+			echo $working->insert_data($_REQUEST['tablename'], $_REQUEST['order'], $_REQUEST['data']);
 			break;
 		case 'get_data':
 			$getting = new do_mysql();

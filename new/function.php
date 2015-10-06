@@ -55,9 +55,9 @@ class do_mysql{
 
 	}
 
-	function insert_data($order, $data){
+	function insert_data($tablename, $order, $data){
 		//$order and $data are all CSV format, the delimiter is comma
-		$insert = "INSERT INTO `" . $this->dbname . "`.`postbox_receiving` ("  . $order .  ") VALUES (" . $data . ");";
+		$insert = "INSERT INTO `" . $this->dbname . "`.`".$tablename."` ("  . $order .  ") VALUES (" . $data . ");";
 		if ($this->db->query($insert)){
 			return 0; //succeed
 		}else{
