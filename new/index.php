@@ -10,7 +10,7 @@
 			$working = new do_mysql();
 			echo $working->insert_data($_REQUEST['tablename'], $_REQUEST['order'], $_REQUEST['data']);
 			break;
-		case 'get_data':
+		case 'get_only_one_row':
 			$getting = new do_mysql();
 			echo $getting->get_data($_REQUEST['tablename'], $_REQUEST['is_only_one']);
 			break;
