@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>後台系統</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+	#container{
+		height:80%;
+		width:100%;
+	}
+    #map {
+        height: 100%;
+        width: 100%;
+    }
+    </style>
+  </head>
+  <body ng-app="getDataApp">
+  	<div class="row-fluid">
+	  	<div id="selector" class="col-lg-12 text-center">
+	  		<h3>1. 請選擇郵筒</h3>
+	  	</div>
+  	</div>
+  	<div id="container" class="col-lg-12">
+    	<div id="map"></div>
+    </div>
+    <div class="row-fluid">
+	  	<div id="panel" class="col-lg-12 text-center">
+	  		
+	  	</div>
+  	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="postbox_send_log" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">郵筒狀態</h4>
+	      </div>
+	      <div class="modal-body">
+			<table class="table table-hover table-bordered" ng-controller="getSendLogCtrl as ctrl">
+				<tr>
+					<td>郵筒編號</td>
+					<td>{{ ctrl.data.postbox_no }}</td>
+				</tr>
+				<tr>
+					<td>郵筒所在經度</td>
+					<td>{{ ctrl.data.gps_longitude }}</td>
+				</tr>
+				<tr>
+					<td>郵筒所在緯度</td>
+					<td>{{ ctrl.data.gps_latitude }}</td>
+				</tr>
+				<tr>
+					<td>寄件日期</td>
+					<td>{{ ctrl.data.send_date }}</td>
+				</tr>
+				<tr>
+					<td>寄件時間</td>
+					<td>{{ ctrl.data.send_time }}</td>
+				</tr>
+				<tr>
+					<td>左孔投遞次數</td>
+					<td>{{ ctrl.data.left_hole_times }} 次</td>
+				</tr>
+				<tr>
+					<td>左孔估計重量</td>
+					<td>{{ ctrl.data.left_hole_currently_weight }} 公克</td>
+				</tr>
+				<tr>
+					<td>右孔投遞次數</td>
+					<td>{{ ctrl.data.right_hole_times }} 次</td>
+				</tr>
+				<tr>
+					<td>右孔估計重量</td>
+					<td>{{ ctrl.data.right_hole_currently_weight }} 公克</td>
+				</tr>
+			</table>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+		<!-- Modal -->
+	<div class="modal fade" id="postbox_sensor_log" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">接近人數</h4>
+	      </div>
+	      <div class="modal-body">
+			<table class="table table-hover table-bordered" ng-controller="getSensorLogCtrl as ctrl">
+				<tr>
+					<td>郵筒編號</td>
+					<td>{{ ctrl.data.postbox_no }}</td>
+				</tr>
+				<tr>
+					<td>郵筒所在經度</td>
+					<td>{{ ctrl.data.gps_longitude }}</td>
+				</tr>
+				<tr>
+					<td>郵筒所在緯度</td>
+					<td>{{ ctrl.data.gps_latitude }}</td>
+				</tr>
+				<tr>
+					<td>接近次數</td>
+					<td>{{ ctrl.data.sensor_count }} 次</td>
+				</tr>
+			</table>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="postbox_collect_log" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">收攬歷史</h4>
+	      </div>
+	      <div class="modal-body">
+			<table class="table table-hover table-bordered" ng-controller="getCollectLogCtrl as ctrl">
+				<tr>
+					<td>郵筒編號</td>
+					<td>{{ ctrl.data.postbox_no }}</td>
+				</tr>
+				<tr>
+					<td>收攬段編號</td>
+					<td>{{ ctrl.data.receive_path_no }}</td>
+				</tr>
+				<tr>
+					<td>收攬日期</td>
+					<td>{{ ctrl.data.receive_date }}</td>
+				</tr>
+				<tr>
+					<td>收攬時間</td>
+					<td>{{ ctrl.data.receive_time }}</td>
+				</tr>
+				<tr>
+					<td>收攬班次</td>
+					<td>{{ ctrl.data.receive_no }}</td>
+				</tr>
+				<tr>
+					<td>左孔投信次數</td>
+					<td>{{ ctrl.data.left_hole_times }} 次</td>
+				</tr>
+				<tr>
+					<td>左孔累計重量</td>
+					<td>{{ ctrl.data.left_hole_currently_weight }} 公克</td>
+				</tr>
+				<tr>
+					<td>右孔投信次數</td>
+					<td>{{ ctrl.data.right_hole_times }} 次</td>
+				</tr>
+				<tr>
+					<td>右孔累計重量</td>
+					<td>{{ ctrl.data.right_hole_currently_weight }} 公克</td>
+				</tr>
+				<tr>
+					<td>累計總重量</td>
+					<td>{{ ctrl.data.total_weight }} 公克</td>
+				</tr>
+				<tr>
+					<td>郵務員編號</td>
+					<td><a href="#">{{ ctrl.data.postman_id }}</a></td>
+				</tr>
+			</table>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script>
+    $(document).ready(function(){
+
+		// var markersData = [
+		// {
+		// 	position: {lat:25.018646, lng:121.537340},
+		// 	map: map,
+		// 	title: '郵筒編號:123',
+		// 	icon: "icon.png"
+		// },
+		// {
+		// 	position: {lat:25.020769, lng:121.534147},
+		// 	map: map,
+		// 	title: '郵筒位置',
+		// 	icon: "icon.png"
+		// },
+		// {
+		// 	position: {lat:25.013976, lng:121.535353},
+		// 	map: map,
+		// 	title: '郵筒位置',
+		// 	icon: "icon.png"
+		// }
+		// ];
+
+		// var content = "";
+		// content += "2.選擇查詢項目";
+		// content += "<button class=\"btn btn-success\" data-toggle=\"modal\" data-target=\"#postbox_sensor_log\">接近人數</button> ";
+		// content += "<button class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#postbox_send_log\">郵筒狀態</button> ";
+		// content += "<button class=\"btn btn-info\">收攬歷史</button> ";
+		// var infowindow = new google.maps.InfoWindow({
+		// 	content: content
+		// });
+
+		// var markers = [];
+
+		// for(var i = 0; i < markersData.length; i++){
+		// 	markers[i] = new google.maps.Marker(markersData[i]);
+		// 	var marker = markers[i];
+		// 	google.maps.event.addListener(marker, 'click', function () {
+		// 		infowindow.open(map, this);
+		// 	});
+		// }
+	});
+
+	var app = angular.module('getDataApp', []);
+	app.controller('getSendLogCtrl', function($http){
+		var self = this;
+		self.initMap= function(lat, lng) {
+
+
+			var map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat:lat, lng:lng},
+				zoom: 16
+			});
+
+			var content = "";
+			content += "<p>2. 請選擇查詢項目</p>";
+			content += "<button class=\"btn btn-success\" data-toggle=\"modal\" data-target=\"#postbox_sensor_log\">接近人數</button> ";
+			content += "<button class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#postbox_send_log\">郵筒狀態</button> ";
+			content += "<button class=\"btn btn-info\" data-toggle=\"modal\" data-target=\"#postbox_collect_log\">收攬歷史</button> ";
+			var infowindow = new google.maps.InfoWindow({
+				content: content
+			});
+
+			var marker = new google.maps.Marker({
+				position: {lat:lat, lng:lng},
+				map: map,
+				title: '郵筒',
+				icon: "icon.png"
+			});
+			google.maps.event.addListener(marker, 'click', function () {
+				infowindow.open(map, this);
+			});
+
+		}
+
+		$http({
+			method: 'GET',
+			url: './index.php',
+			params: {
+				operation: 'get_only_one_row',
+				tablename: 'postbox_send_log',
+				is_only_one: true
+			}
+			}).then(function successCallback(response) {
+				self.data = response.data;
+				console.log(self.data);
+				self.initMap(parseFloat(self.data.gps_latitude), parseFloat(self.data.gps_longitude));
+
+			}, function errorCallback(response) {
+
+			});
+		}
+	);
+	app.controller('getSensorLogCtrl', function($http){
+		var self = this;
+
+		$http({
+			method: 'GET',
+			url: './index.php',
+			params: {
+				operation: 'get_only_one_row',
+				tablename: 'postbox_sensor_log',
+				is_only_one: true
+			}
+			}).then(function successCallback(response) {
+				self.data = response.data;
+				console.log(self.data);
+
+			}, function errorCallback(response) {
+
+			});
+		}
+	);
+	app.controller('getCollectLogCtrl', function($http){
+		var self = this;
+
+		$http({
+			method: 'GET',
+			url: './index.php',
+			params: {
+				operation: 'get_only_one_row',
+				tablename: 'postbox_collect_log',
+				is_only_one: true
+			}
+			}).then(function successCallback(response) {
+				self.data = response.data;
+				console.log(self.data);
+
+			}, function errorCallback(response) {
+
+			});
+		}
+	);
+
+
+    </script>
+  </body>
+</html>
