@@ -1,0 +1,22 @@
+<md-bottom-sheet class="md-grid" layout="column" ng-cloak>
+  <div layout="row" layout-align="center center">
+    <h4>請選擇查詢項目</h4>
+  </div>
+  <md-list flex layout="row" layout-align="center center">
+    <md-list-item>
+	    <md-button class="md-primary md-raised" ng-click="getData($event, 'postbox_sensor_log')" flex flex-md="100">
+	      接近人數
+	    </md-button>
+	  </md-list-item>
+	  <md-list-item>
+	    <md-button class="md-primary md-raised" ng-click="getData($event, 'postbox_send_log')" flex flex-md="100">
+	      郵筒狀態
+	    </md-button>
+	  </md-list-item>
+	  <md-list-item>
+	    <md-button class="md-primary md-raised" ng-click="getData($event, 'postbox_collect_log')" flex flex-md="100">
+	      收攬歷史
+	    </md-button>
+    </md-list-item>
+  </md-list>
+</md-bottom-sheet>

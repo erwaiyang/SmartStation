@@ -39,6 +39,17 @@ class do_mysql{
 		return json_encode($data);
 	}
 
+	function get_last_data($tablename, $postbox_no){
+		$query = "SELECT * FROM `"  . $tablename .  "` WHERE `postbox_no`='" . $postbox_no . "' ORDER BY `" . $tablename . "`.`id` DESC LIMIT 0,1;";
+		
+		$result = $this->db->query($query);
+		
+		//return data
+		$data = $result->fetch_assoc();
+		$result->close();
+		return json_encode($data);
+	}
+
 	function get_table_rows($tablename, $limit_start, $limit_row){
 		$query = "SELECT * FROM `"  . $tablename .  "` ORDER BY `ID` DESC LIMIT " . $limit_start . "," . $limit_row . " ;";
 		

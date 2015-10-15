@@ -18,6 +18,10 @@
 			$getting = new do_mysql();
 			echo $getting->get_table_rows($_REQUEST['tablename'], $_REQUEST['limit_start'], $_REQUEST['limit_row']);
 			break;
+		case 'get_last_data':
+			$getting = new do_mysql();
+			echo $getting->get_last_data($_REQUEST['tablename'], $_REQUEST['postbox_no']);
+			break;
 		default:
 			# code...
 			break;

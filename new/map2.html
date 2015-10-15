@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html ng-app="getDataApp">
   <head>
     <title>後台系統</title>
@@ -21,7 +21,7 @@
 
         #map_canvas {
             position: relative;
-            height: 80%;
+            min-height: 80%;
             width: 100%;
         }
 
@@ -177,14 +177,24 @@ md-input-container.md-default-theme .md-input {
 				  events='searchbox.events'
 				  >
 				</ui-gmap-search-box>
+
+				<ui-gmap-markers
+				models="markers"
+				coords="'self'"
+				icon="'icon.png'"
+				click="showGridBottomSheet"
+				>
+
+				</ui-gmap-markers>
 		</ui-gmap-google-map>
     </div>
 
 	
 	<!--Dialog-->
+	<div id="popupContainer" />
 
 
-	<div id="popupContainer" class="md-padding" ng-controller="dialogCtrl as ctrl" ng-cloak layout="row">
+<!-- 	<div id="popupContainer" class="md-padding" ng-controller="dialogCtrl as ctrl" ng-cloak layout="row">
 	    <md-button class="md-primary md-raised" ng-click="ctrl.getData($event, 'postbox_sensor_log')" flex flex-md="100">
 	      接近人數
 	    </md-button>
@@ -194,7 +204,7 @@ md-input-container.md-default-theme .md-input {
 	    <md-button class="md-primary md-raised" ng-click="ctrl.getData($event, 'postbox_collect_log')" flex flex-md="100">
 	      收攬歷史
 	    </md-button>
-	</div>
+	</div> -->
 
 	<script src='./js/lodash.min.js'></script>
 
@@ -222,46 +232,12 @@ md-input-container.md-default-theme .md-input {
 	    });
 	});
 
-	app.controller('dialogCtrl', function($http, $mdDialog){
-		var self = this;
-		self.type = "";
-		self.getData = function(ev, type){
-			self.type = type;
-		    $mdDialog.show({
-		      controller: DialogController,
-		      templateUrl: './template/' + self.type + '.html',
-		      parent: angular.element(document.body),
-		      targetEvent: ev,
-		      clickOutsideToClose:true
-		    });
-		 };
-		function DialogController($scope, $mdDialog) {
-			$http({
-				method: 'GET',
-				url: './index.php',
-				params: {
-					operation: 'get_only_one_row',
-					tablename: self.type,
-					is_only_one: true
-				}
-			}).then(function successCallback(response) {
-					console.log(response.data);
-					$scope.data = response.data;
-				}, function errorCallback(response) {
-					console.log("error");
-				}
-			);
-		  $scope.hide = function() {
-		    $mdDialog.hide();
-		  };
-		};
-	});
-	app.controller('mapCtrl', function($scope, uiGmapGoogleMapApi) {
+	app.controller('mapCtrl', function($scope, $http, uiGmapGoogleMapApi, $mdBottomSheet, indexService) {
 		
 		var taipei_center = {latitude:25.033521,longitude:121.534800};
 		$scope.map = { 
 			center: taipei_center, 
-			zoom: 15 ,
+			zoom: 13 ,
 			control :{}
 		};
 
@@ -271,7 +247,7 @@ md-input-container.md-default-theme .md-input {
                     $scope.mapInstance = map;
                 });
             },
-          places_changed: function (searchBox) {
+			places_changed: function (searchBox) {
           			var places = searchBox.getPlaces();
 
 				    if (places.length == 0) {
@@ -297,13 +273,103 @@ md-input-container.md-default-theme .md-input {
         };
 		$scope.searchbox = { 
 			template:'./template/searchbox.html',
-			events:events};
+			events:events
+		};
+
 	    uiGmapGoogleMapApi.then(function(maps) {
-	    	
+			$http({
+				method: 'GET',
+				url: './index.php',
+				params: {
+					operation: 'get_table_rows',
+					tablename: 'postbox_base',
+					limit_start: 0,
+					limit_row: 100
+				}
+			}).then(function successCallback(response) {
+					//add makers
+					//$scope.markers = [{latitude: 25.033521, longitude:121.534800, id:1}];
+					$scope.markers = [];
+					for(var i = 0; i<response.data.length; i++){
+						var latitude = response.data[i].gps_latitude;
+						var longitude = response.data[i].gps_longitude;
+						var postbox_no = response.data[i].postbox_no;
+						var data = {
+							latitude: latitude,
+							longitude: longitude,
+							postbox_no: postbox_no,				
+							id : i
+						};
+						$scope.markers.push(data);
+					}
+					console.log(response.data);
+				}, function errorCallback(response) {
+					console.log("error");
+				}
+			);
 	    });
+
+	    //功能表
+	    $scope.showGridBottomSheet = function($object, $event, $model){
+	    	indexService.postbox_no = ($model.postbox_no);
+			$mdBottomSheet.show({
+		      templateUrl: './template/actions.html',
+		      controller: 'dialogCtrl',
+		      clickOutsideToClose: true,
+		      targetEvent: $event
+		    });
+	    }
 	});
 
+	app.controller('dialogCtrl', function($scope, $http, $mdDialog, indexService){
+		var self = this;
+		self.type = "";
+		$scope.getData = function(ev, type){
+			self.type = type;
+		    $mdDialog.show({
+		      controller: DialogController,
+		      templateUrl: './template/' + type + '.html',
+		      parent: angular.element(document.body),
+		      targetEvent: ev,
+		      clickOutsideToClose:true
+		    });
+		 };
+		function DialogController($scope, $mdDialog) {
+			//console.log("before http get "+indexService.postbox_no);
+			//console.log("before http get "+self.type);
+			$http({
+				method: 'GET',
+				url: './index.php',
+				params: {
+					operation: 'get_last_data',
+					tablename: self.type,
+					postbox_no: indexService.postbox_no
+				}
+			}).then(function successCallback(response) {
+					if(response.data=='null'){
+						console.log('no data');
+						$scope.status = "抱歉，暫無資料";
+						$scope.isShow = false;
+					}else{
+						$scope.data = response.data;
+						$scope.isShow = true;
+					}
+				}, function errorCallback(response) {
+					console.log("error");
+				}
+			);
+		  $scope.hide = function() {
+		    $mdDialog.hide();
+		  };
+		};
+	});
 
+app.factory('indexService', function() {
+	var postbox_no = "";
+	return{
+		postbox_no: postbox_no
+	};
+});
     </script>
   </body>
 </html>
