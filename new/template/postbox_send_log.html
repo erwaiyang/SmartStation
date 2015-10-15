@@ -1,0 +1,57 @@
+<md-dialog aria-label="send log"  ng-cloak>
+  <form>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>郵筒狀態</h2>
+      <span flex></span>
+    </div>
+  </md-toolbar>
+  <md-dialog-content style="min-width:600px;max-height:810px; ">
+    <div class="md-dialog-content">
+      <table md-colresize="md-colresize" class="md-table">
+        <tr>
+          <td>郵筒編號</td>
+          <td>{{ data.postbox_no }}</td>
+        </tr>
+        <tr>
+          <td>郵筒所在經度</td>
+          <td>{{ data.gps_longitude }}</td>
+        </tr>
+        <tr>
+          <td>郵筒所在緯度</td>
+          <td>{{ data.gps_latitude }}</td>
+        </tr>
+        <tr>
+          <td>寄件日期</td>
+          <td>{{ data.send_date }}</td>
+        </tr>
+        <tr>
+          <td>寄件時間</td>
+          <td>{{ data.send_time }}</td>
+        </tr>
+        <tr>
+          <td>左孔投遞次數</td>
+          <td>{{ data.left_hole_times }} 次</td>
+        </tr>
+        <tr>
+          <td>左孔估計重量</td>
+          <td>{{ data.left_hole_currently_weight }} 公克</td>
+        </tr>
+        <tr>
+          <td>右孔投遞次數</td>
+          <td>{{ data.right_hole_times }} 次</td>
+        </tr>
+        <tr>
+          <td>右孔估計重量</td>
+          <td>{{ data.right_hole_currently_weight }} 公克</td>
+        </tr>
+      </table>
+    </div>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <md-button ng-click="hide()" >
+    關閉
+    </md-button>
+  </div>
+  </form>
+</md-dialog>

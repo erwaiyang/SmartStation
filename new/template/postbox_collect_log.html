@@ -1,0 +1,65 @@
+<md-dialog aria-label="send log"  ng-cloak>
+  <form>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>收攬歷史</h2>
+      <span flex></span>
+    </div>
+  </md-toolbar>
+  <md-dialog-content style="min-width:600px;max-height:810px; ">
+    <div class="md-dialog-content">
+      <table md-colresize="md-colresize" class="md-table">
+        <tr>
+          <td>郵筒編號</td>
+          <td>{{ data.postbox_no }}</td>
+        </tr>
+        <tr>
+          <td>收攬段編號</td>
+          <td>{{ data.receive_path_no }}</td>
+        </tr>
+        <tr>
+          <td>收攬日期</td>
+          <td>{{ data.receive_date }}</td>
+        </tr>
+        <tr>
+          <td>收攬時間</td>
+          <td>{{ data.receive_time }}</td>
+        </tr>
+        <tr>
+          <td>收攬班次</td>
+          <td>{{ data.receive_no }}</td>
+        </tr>
+        <tr>
+          <td>左孔投信次數</td>
+          <td>{{ data.left_hole_times }} 次</td>
+        </tr>
+        <tr>
+          <td>左孔累計重量</td>
+          <td>{{ data.left_hole_currently_weight }} 公克</td>
+        </tr>
+        <tr>
+          <td>右孔投信次數</td>
+          <td>{{ data.right_hole_times }} 次</td>
+        </tr>
+        <tr>
+          <td>右孔累計重量</td>
+          <td>{{ data.right_hole_currently_weight }} 公克</td>
+        </tr>
+        <tr>
+          <td>累計總重量</td>
+          <td>{{ data.total_weight }} 公克</td>
+        </tr>
+        <tr>
+          <td>郵務員編號</td>
+          <td><a href="#">{{ data.postman_id }}</a></td>
+        </tr>
+      </table>
+    </div>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <md-button ng-click="hide()" >
+    關閉
+    </md-button>
+  </div>
+  </form>
+</md-dialog>

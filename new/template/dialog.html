@@ -1,0 +1,40 @@
+<md-dialog aria-label="collect log"  ng-cloak>
+  <form>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>接近人數</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content style="max-width:800px;max-height:810px; ">
+    <div class="md-dialog-content">
+      <table class="table table-hover table-bordered">
+        <tr>
+          <td>郵筒編號</td>
+          <td>{{ data.postbox_no }}</td>
+        </tr>
+        <tr>
+          <td>郵筒所在經度</td>
+          <td>{{ data.gps_longitude }}</td>
+        </tr>
+        <tr>
+          <td>郵筒所在緯度</td>
+          <td>{{ data.gps_latitude }}</td>
+        </tr>
+        <tr>
+          <td>接近次數</td>
+          <td>{{ data.sensor_count }} 次</td>
+        </tr>
+      </table>
+    </div>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <md-button ng-click="hide()" >
+    關閉
+    </md-button>
+  </div>
+  </form>
+</md-dialog>

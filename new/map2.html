@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html ng-app="getDataApp">
+  <head>
+    <title>後台系統</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+	#container{
+		height: 70%;
+		width:100%;
+	}
+    #map {
+        height: 100%;
+        width: 100%;
+    }
+
+        #map_canvas {
+            position: relative;
+            height: 80%;
+            width: 100%;
+        }
+
+        .angular-google-map-container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+
+    a {
+  text-decoration: none;
+}
+
+i {
+  vertical-align: middle;
+  font-size: 24px;
+}
+
+.main-fab {
+  position:absolute;
+  z-index:20;
+  font-size:30px;
+  top:100px;
+  left:24px;
+  transform:scale(.88,.88);
+}
+
+.md-breadcrumb {
+  padding-left:88px;  
+}
+
+.JCLRgrip:first-child {
+  left:105px!important;
+  display: none!important;
+}
+
+.JColResizer th:first-child {
+  width: 105px!important;
+}
+
+.md-table {
+  min-width: 100%;
+  border-collapse: collapse;
+}
+
+.md-table tbody tr:hover, .md-table tbody tr:focus {
+  cursor:pointer;
+  background-color:rgba(63,81,181,0.2);
+}
+
+.md-table-header {
+  border-bottom: 1px solid rgb(230,230,230);
+  color: rgb(130,130,130);
+  text-align: left;
+  font-size: 0.75em;
+  font-weight: 700;
+  padding: 16px 16px 16px 0;
+}
+
+.md-table-header a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.md-table-content {
+  white-space: nowrap;
+  font-size: 0.8em;
+  padding: 16px 16px 16px 0;
+  height: 72px;
+}
+
+.md-table-td-more {
+  max-width:72px;
+  width:72px;
+  padding:16px;
+}
+
+.md-table-thumbs {
+  max-width: 104px;
+  width: 104px;
+  padding: 16px 32px;
+}
+
+.md-table-thumbs div {
+  overflow:hidden;
+  width: 40px;
+  height:40px;
+  border-radius:20px;
+  border: 1px solid rgba(0,0,0,0.2);
+  background-size:cover;
+  box-shadow: 0 8px 10px rgba(0,0,0,.3);
+  -webkit-box-shadow: 0 8px 10px rgba(0,0,0,.1);
+}
+
+.md-table-footer {
+  height:40px;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.md-table-count-info {
+  line-height:40px;
+  font-size:.75em;
+}
+
+.md-table-footer-item {
+  width: 40px;
+  height: 40px;
+  vertical-align:middle;
+}
+
+.md-table-active-page {
+  font-weight: 700;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.grey {
+  color: grey;
+}
+
+md-input-container.md-default-theme .md-input {
+  color: white;
+  border-color: white;
+  margin-top: 24px;
+}
+
+    </style>
+        <!-- Angular Material CSS now available via Google CDN; version 0.11.2 used here -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.css">
+
+  </head>
+  <body>
+	<div layout="column">
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<h3>智慧驛站後台系統</h3>
+				<!-- fill up the space between left and right area -->
+				<span flex></span>
+			</div>
+		</md-toolbar>
+	</div>
+
+  	<div id="map_canvas" layout="row" flex ng-controller="mapCtrl">
+		<ui-gmap-google-map id="map" center='map.center' zoom='map.zoom' control='map.control'>
+
+				<ui-gmap-search-box
+				  template='searchbox.template'
+				  events='searchbox.events'
+				  >
+				</ui-gmap-search-box>
+		</ui-gmap-google-map>
+    </div>
+
+	
+	<!--Dialog-->
+
+
+	<div id="popupContainer" class="md-padding" ng-controller="dialogCtrl as ctrl" ng-cloak layout="row">
+	    <md-button class="md-primary md-raised" ng-click="ctrl.getData($event, 'postbox_sensor_log')" flex flex-md="100">
+	      接近人數
+	    </md-button>
+	    <md-button class="md-primary md-raised" ng-click="ctrl.getData($event, 'postbox_send_log')" flex flex-md="100">
+	      郵筒狀態
+	    </md-button>
+	    <md-button class="md-primary md-raised" ng-click="ctrl.getData($event, 'postbox_collect_log')" flex flex-md="100">
+	      收攬歷史
+	    </md-button>
+	</div>
+
+	<script src='./js/lodash.min.js'></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.min.js"></script>
+
+	<script src='./js/angular-simple-logger.min.js'></script>
+	<script src='./js/angular-google-maps.min.js'></script>
+    <!-- Angular Material Javascript now available via Google CDN; version 0.11.2 used here -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.js"></script>
+
+    <script>
+	var app = angular.module('getDataApp', ['ngMaterial','uiGmapgoogle-maps']);
+
+	app.config(function($mdThemingProvider) {
+		$mdThemingProvider.theme('default')
+		.primaryPalette('green')
+		.accentPalette('red');
+	}).config(function(uiGmapGoogleMapApiProvider) {
+	    uiGmapGoogleMapApiProvider.configure({
+	        //    key: 'your api key',
+	        v: '3.20', //defaults to latest 3.X anyhow
+	        libraries: 'places'
+	    });
+	});
+
+	app.controller('dialogCtrl', function($http, $mdDialog){
+		var self = this;
+		self.type = "";
+		self.getData = function(ev, type){
+			self.type = type;
+		    $mdDialog.show({
+		      controller: DialogController,
+		      templateUrl: './template/' + self.type + '.html',
+		      parent: angular.element(document.body),
+		      targetEvent: ev,
+		      clickOutsideToClose:true
+		    });
+		 };
+		function DialogController($scope, $mdDialog) {
+			$http({
+				method: 'GET',
+				url: './index.php',
+				params: {
+					operation: 'get_only_one_row',
+					tablename: self.type,
+					is_only_one: true
+				}
+			}).then(function successCallback(response) {
+					console.log(response.data);
+					$scope.data = response.data;
+				}, function errorCallback(response) {
+					console.log("error");
+				}
+			);
+		  $scope.hide = function() {
+		    $mdDialog.hide();
+		  };
+		};
+	});
+	app.controller('mapCtrl', function($scope, uiGmapGoogleMapApi) {
+		
+		var taipei_center = {latitude:25.033521,longitude:121.534800};
+		$scope.map = { 
+			center: taipei_center, 
+			zoom: 15 ,
+			control :{}
+		};
+
+		var events = {
+			tilesloaded: function (map) {
+                $scope.$apply(function () {
+                    $scope.mapInstance = map;
+                });
+            },
+          places_changed: function (searchBox) {
+          			var places = searchBox.getPlaces();
+
+				    if (places.length == 0) {
+				      return;
+				    }
+
+				    console.log(places);
+
+			    // For each place, get the icon, name and location.
+			    var bounds = new google.maps.LatLngBounds();
+			    places.forEach(function(place) {
+
+			      if (place.geometry.viewport) {
+			        // Only geocodes have viewport.
+			        bounds.union(place.geometry.viewport);
+			      } else {
+			        bounds.extend(place.geometry.location);
+			      }
+			    });
+			    $scope.map.control.getGMap().fitBounds(bounds);
+			    $scope.map.control.getGMap().setZoom(16);
+          }
+        };
+		$scope.searchbox = { 
+			template:'./template/searchbox.html',
+			events:events};
+	    uiGmapGoogleMapApi.then(function(maps) {
+	    	
+	    });
+	});
+
+
+    </script>
+  </body>
+</html>
