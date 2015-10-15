@@ -168,8 +168,9 @@ md-input-container.md-default-theme .md-input {
 			</div>
 		</md-toolbar>
 	</div>
-
+	<md-progress-linear class="md-warn" md-mode="indeterminate" ng-hide="isOk" ng-controller="mapCtrl"></md-progress-linear>
   	<div id="map_canvas" layout="row" flex ng-controller="mapCtrl">
+		
 		<ui-gmap-google-map id="map" center='map.center' zoom='map.zoom' control='map.control'>
 
 				<ui-gmap-search-box
@@ -302,7 +303,9 @@ md-input-container.md-default-theme .md-input {
 						};
 						$scope.markers.push(data);
 					}
-					console.log(response.data);
+
+					$scope.isOk = true;
+					
 				}, function errorCallback(response) {
 					console.log("error");
 				}
