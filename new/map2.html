@@ -170,7 +170,7 @@ md-input-container.md-default-theme .md-input {
 	</div>
 	<md-progress-linear class="md-warn" md-mode="indeterminate" ng-hide="isOk" ng-controller="mapCtrl"></md-progress-linear>
   	<div id="map_canvas" layout="row" flex ng-controller="mapCtrl">
-		
+		<div data-tap-disabled="true">
 		<ui-gmap-google-map id="map" center='map.center' zoom='map.zoom' control='map.control'>
 
 				<ui-gmap-search-box
@@ -188,6 +188,7 @@ md-input-container.md-default-theme .md-input {
 
 				</ui-gmap-markers>
 		</ui-gmap-google-map>
+    	</div>
     </div>
 
 	
