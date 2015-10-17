@@ -12,7 +12,9 @@
 </head>
 <body layout="column" ng-controller="AppCtrl">
 	<div style="position:fixed;bottom:3em;right:3em;z-index:99;background-color:#42bd41;padding:1em;border-radius: 10px;">
-		<a href="#" id="go_to_top">TOP</a>
+		<!--button href="#" id="go_to_top"-->
+		<span class="ng-binding ng-scope" id="go_to_top" style="cursor:pointer;">TOP</span>
+		<!--</button-->
 	</div>
 	<div layout="row">
 		<md-toolbar>
@@ -84,7 +86,9 @@
 					</md-content>
 				</md-tab>
 				<md-tab label="行動管理">
-					<img src="./img/concept/4.jpg" class="concept_img p_img" />
+					<img src="./img/viewpager1.png" class="concept_img p_img" />
+					<img src="./img/viewpager2.png" class="concept_img p_img" />
+					<img src="./img/viewpager3.png" class="concept_img p_img" />
 					<md-content>
 						<h3 class="md-headline">
 							<p>管理者可自用手機APP即時查看郵筒狀態。</p>
@@ -114,7 +118,7 @@
 		<div flex="33" layout="column"  layout-align="center center">
 			<img src="./img/android.png" class="demo_icon" />
 			<h3 class="md-title">
-				<a href="https://drive.google.com/folderview?id=0B3shdEQetjjmfmw2Wk5ENU5BMkpCMnJBYkhwWmFMMFY3MUdfY29BWFNZTngzT0syaFNZYkU&usp=sharing" ng-href="https://drive.google.com/folderview?id=0B3shdEQetjjmfmw2Wk5ENU5BMkpCMnJBYkhwWmFMMFY3MUdfY29BWFNZTngzT0syaFNZYkU&usp=sharing" aria-label="android_app" class="md-primary md-raised md-button md-default-theme" ng-transclude="">
+				<a href="https://drive.google.com/folderview?id=0B3shdEQetjjmSVJCMUtOQW9wN28&usp=sharing" ng-href="https://drive.google.com/folderview?id=0B3shdEQetjjmSVJCMUtOQW9wN28&usp=sharing" class="md-primary md-raised md-button md-default-theme" ng-transclude="">
           			<span class="ng-binding ng-scope">Android</span>
           			<div style="" class="md-ripple-container"></div>
           		</a>
@@ -123,7 +127,7 @@
 		<div flex="33" layout="column"  layout-align="center center">
 			<img src="./img/apache.png" />
 			<h3 class="md-title">
-				<a href="./../manager.html" ng-href="./../manager.html" aria-label="web_manager" class="md-primary md-raised md-button md-default-theme" ng-transclude="">
+				<a href="./../manager.html" ng-href="http://52.1.130.19/SmartStation/new/map2.html" aria-label="web_manager" class="md-primary md-raised md-button md-default-theme" ng-transclude="">
           			<span class="ng-binding ng-scope">Web Manager</span>
           			<div style="" class="md-ripple-container"></div>
           		</a>
@@ -137,32 +141,38 @@
 		<h2 class="md-display-3">---TEAM---</h2>
 	</div>
 
-	<div id="team" layout="row" layout-fill layout-align="center center">
+	<div id="team" layout="row" layout-align="center center">
 		<div flex layout="column"  layout-align="center center">
 			<h4 class="md-title">吳胤澤</h4>
-			<small class="md-subhead">#845</small>
+			<small class="md-subhead">Justin</small>
 		</div>
 		<div flex layout="column"  layout-align="center center">
 			<h4 class="md-title">柯清長</h4>
-			<small class="md-subhead">#692</small>
+			<small class="md-subhead">KDA</small>
 		</div>
 		<div flex layout="column"  layout-align="center center">
 			<h4 class="md-title">楊雅晴</h4>
-			<small class="md-subhead">#697</small>
+			<small class="md-subhead">Jean</small>
 		</div>
 		<div flex layout="column"  layout-align="center center">
 			<h4 class="md-title">陳仲彥</h4>
-			<small class="md-subhead">#716</small>
+			<small class="md-subhead">CCY</small>
+		</div>
+		<div flex layout="column"  layout-align="center center">
+			<h4 class="md-title">黃浩恩</h4>
+			<small class="md-subhead">HAOEN</small>
 		</div>
 	</div>
-	<div>
-		<img src="./img/team.jpg" style="max-width:100%;" />
+	<div layout-align="center center">
+	<center>
+		<img src="./img/team.jpg" style="max-width:100%;"  />
+		</center>
 	</div>
 	<!-- </div>	 -->
 
 	<md-grid-tile>
 		<md-grid-tile-footer>
-			<h4>NTU Hackathon 2015. Team SmartStation.</h34>
+			<h4>MediaTek 2015. Team SmartStation.</h34>
 		</md-grid-tile-footer>
 	</md-grid-tile>
 
